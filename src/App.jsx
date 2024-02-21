@@ -45,7 +45,7 @@ function App() {
       videoRef.current.play();
     }
     
-    return fetch("https://google.serper.dev/search", requestOptions)
+     fetch("https://google.serper.dev/search", requestOptions)
       .then(response => response.json())
       .then(result => {
         console.log(result.organic[0].snippet)
