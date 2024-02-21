@@ -7,29 +7,36 @@ import annyang  from'annyang'
 
  
 function App() {
- 
+  const videoRef = useRef(null);
   const [userText, setUserText] = useState('')
-
   const anything = (anything) =>{
     setUserText(anything)
-    console.log(anything);
   };
   const [commands] = useState(
-  { '*anything': anything}
-  )
-  const leerTexto=(texto)=>
-  {
+    { '*anything': anything}
+    )
+  let myHeaders = new Headers();
+  myHeaders.append("X-API-KEY", "3f2b34bd0c3ba113f147ddf0f27e5fc94bc65870");
+  myHeaders.append("Content-Type", "application/json");
+  let raw = JSON.stringify({"q": userText});
+  let requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: raw,
+    redirect: 'follow'
+  };
+  
+  
+  const leerTexto=(texto)=>{
     let voz = window.speechSynthesis;
-
     let dictator = new SpeechSynthesisUtterance(texto);
     let voices = window.speechSynthesis.getVoices()
     dictator.voice=voices[5]
     dictator.lang = 'en-US';
     dictator.pitch=1.4
-    voz.speak(dictator);
+    return voz.speak(dictator);
   }
    
-  const videoRef = useRef(null);
   const handleRecord=()=>{
       annyang.addCommands(commands);
       annyang.start()
@@ -38,24 +45,6 @@ function App() {
     if (videoRef.current) {
       videoRef.current.play();
     }
-    else if (videoRef.current) {
-      videoRef.current.pause();
-      videoRef.current.currentTime = 0; // Regresa al inicio del video
-    }
-    var myHeaders = new Headers();
-    myHeaders.append("X-API-KEY", "3f2b34bd0c3ba113f147ddf0f27e5fc94bc65870");
-    myHeaders.append("Content-Type", "application/json");
-    
-    var raw = JSON.stringify({
-      "q": userText
-    });
-    
-    var requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
-    };
     
     fetch("https://google.serper.dev/search", requestOptions)
       .then(response => response.json())
