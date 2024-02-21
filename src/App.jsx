@@ -40,6 +40,7 @@ function App() {
   }
   // Set question
   const handleAsk = () => {
+    voz.cancel()
     annyang.addCommands(commands);
     annyang.start()
   }
@@ -76,7 +77,7 @@ function App() {
       <Button onClick={handleAsk} color="success" className={sharedStyles}>Ask a question</Button>
       <Button onClick={handleGetAnswer} color="primary" className={sharedStyles}>Get answer</Button>
       <Button onClick={handleStopAnswer} color="danger" className={sharedStyles}>Stop answering</Button>
-      <div className='texting'> {userText}</div>
+      <div className='texting'> you said: {userText}</div>
     </div>
   )
 }
