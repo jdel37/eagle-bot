@@ -5,7 +5,6 @@ import video from './assets/MrMascadedo.mp4'
 import './App.css'
 import annyang  from'annyang'
 
- //heloo mother
 function App() {
   const videoRef = useRef(null);
   const [userText, setUserText] = useState('')
@@ -26,8 +25,8 @@ function App() {
     redirect: 'follow'
   };
   
-  
-  const leerTexto=(texto)=>{
+  //Event handlers
+  const readText=(texto)=>{
     let voz = window.speechSynthesis;
     let dictator = new SpeechSynthesisUtterance(texto);
     let voices = window.speechSynthesis.getVoices()
@@ -46,11 +45,11 @@ function App() {
       videoRef.current.play();
     }
     
-    fetch("https://google.serper.dev/search", requestOptions)
+    return fetch("https://google.serper.dev/search", requestOptions)
       .then(response => response.json())
       .then(result => {
         console.log(result.organic[0].snippet)
-        return leerTexto(result.organic[0].snippet)}) 
+        return readText(result.organic[0].snippet)}) 
       .catch(error => console.log('error', error));
       return annyang.abort()
     
